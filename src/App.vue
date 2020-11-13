@@ -1,22 +1,33 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <canvas class="stage"></canvas>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
 
 export default {
   name: 'App',
-  components: {
-    HelloWorld
-  }
+  data: function () {
+    return {
+      stage: null
+    }
+  },
+  mounted: function() {
+    this.stage = new this.createjs.Stage(this.$el.firstChild)
+    let shape = new this.createjs.Shape()
+    shape.graphics.beginFill("DarkRed")
+    shape.graphics.drawCircle(0, 0, 100)
+    shape.x = 200
+    shape.y = 200
+    this.stage.addChild(shape)
+
+    this.stage.update()
+  } 
 }
 </script>
 
-<style>
+<style scoped>
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -24,5 +35,10 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+}
+
+.stage {
+  width: 640px;
+  height: 320px;
 }
 </style>
